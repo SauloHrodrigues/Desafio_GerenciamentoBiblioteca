@@ -1,0 +1,38 @@
+package com.desafio.db.GerenciamentoBiblioteca.controllers;
+
+import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelRequest;
+import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelResponse;
+import com.desafio.db.GerenciamentoBiblioteca.service.AluguelServiceI;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/alugueis")
+public class AluguelController {
+    private final AluguelServiceI serviceI;
+
+    ResponseEntity<AluguelResponse> cadastrar(AluguelRequest dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(serviceI.cadastrar(dto));
+    }
+
+    @GetMapping("/{id}/tpdos_livros")
+    public ResponseEntity<Page<AluguelResponse>> buscarLivros(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarLivros(id)));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<AluguelResponse>> listarAlugueis(@PageableDefault(size = 10, sort = {"Locatario"}) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarAlugueis(pageable)));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AluguelResponse> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body((serviceI.buscarPorId(id)));
+    }
+}
