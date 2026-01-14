@@ -8,5 +8,5 @@ public record AutorRequest(
         String nome,
         Sexo sexo,
         String cpf,
-        LocalDate anoDenascimento
+        Integer anoDeNascimento
 ) {}

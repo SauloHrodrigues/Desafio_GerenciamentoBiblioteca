@@ -8,5 +8,5 @@ public record AutorAtualiza(
         String nome,
         Sexo sexo,
         String cpf,
-        LocalDate anoDenascimento
+        Integer anoDeNascimento
 ) {}

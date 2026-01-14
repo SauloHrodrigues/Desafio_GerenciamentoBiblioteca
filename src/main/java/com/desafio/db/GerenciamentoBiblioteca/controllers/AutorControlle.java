@@ -36,7 +36,7 @@ public class AutorControlle {
     }
 
     @GetMapping("/nome")
-    public ResponseEntity<Page<AutorResponse>> buscarPorNome(@RequestParam String nome){
+    public ResponseEntity<AutorResponse> buscarPorNome(@RequestParam String nome){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorNome(nome));
     }
 

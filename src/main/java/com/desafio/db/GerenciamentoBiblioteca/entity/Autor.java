@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "autores")
 public class Autor extends Pessoa {
     @Column(name = "ano_de_nascimento", nullable = false)
-    private LocalDate anoDenascimento;
+    private Integer anoDeNascimento;
 
     @ManyToMany(mappedBy = "autores")
     private List<Livro> livros = new ArrayList<>();

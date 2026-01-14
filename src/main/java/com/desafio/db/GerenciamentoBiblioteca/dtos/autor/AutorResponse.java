@@ -1,5 +1,6 @@
 package com.desafio.db.GerenciamentoBiblioteca.dtos.autor;
 
+import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
 import com.desafio.db.GerenciamentoBiblioteca.enun.Sexo;
 
@@ -11,6 +12,6 @@ public record AutorResponse(
         String nome,
         Sexo sexo,
         String cpf,
-        LocalDate anoDenascimento,
+        Integer anoDeNascimento,
         List<LivroResponse> livros
 ) {}
