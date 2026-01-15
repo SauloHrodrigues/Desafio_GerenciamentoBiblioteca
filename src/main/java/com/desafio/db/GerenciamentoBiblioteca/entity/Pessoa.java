@@ -16,6 +16,6 @@ public abstract class Pessoa {
     private String nome;
     @Column(name = "sexo")
     private Sexo sexo;
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false,  length = 11)
     private String cpf;
 }

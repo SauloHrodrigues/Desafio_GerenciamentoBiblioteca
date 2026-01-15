@@ -12,6 +12,6 @@ public record LocatarioResponse(
         String cpf,
         String telefone,
         String email,
-        LocalDate dataNascimento
+        LocalDate dataDeNascimento
 ) {
 }

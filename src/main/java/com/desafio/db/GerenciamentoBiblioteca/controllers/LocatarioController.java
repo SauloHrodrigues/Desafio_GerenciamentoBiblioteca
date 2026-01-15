@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/locatarios")
 public class LocatarioController {
-    private LocatarioServiceI serviceI;
+    private final LocatarioServiceI serviceI;
 
     @PostMapping
     public ResponseEntity<LocatarioResponse> cadastrar(@RequestBody @Valid LocatarioRequest dto){

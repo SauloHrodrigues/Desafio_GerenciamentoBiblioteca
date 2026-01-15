@@ -7,8 +7,7 @@ import java.time.LocalDate;
 public record LocatarioAtualiza(
         String nome,
         Sexo sexo,
-        String cpf,
         String telefone,
         String email,
-        LocalDate dataNascimento
+        LocalDate dataDeNascimento
 ) {}
