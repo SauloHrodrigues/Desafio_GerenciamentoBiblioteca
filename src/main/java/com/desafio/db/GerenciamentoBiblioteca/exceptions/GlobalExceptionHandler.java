@@ -32,6 +32,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
     }
 
+    @ExceptionHandler(LivroIndisponivelException.class)
+    public ResponseEntity<Object> handlerLivroIndisponivelException(LivroIndisponivelException mensagem) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
+    }
+
     @ExceptionHandler(IsbnJaExistenteException.class)
     public ResponseEntity<Object> handlerIsbnJaExitenteException(IsbnJaExistenteException mensagem) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
@@ -48,6 +53,16 @@ public class GlobalExceptionHandler {
                 );
 
         return ResponseEntity.badRequest().body(erros);
+    }
+
+    @ExceptionHandler(LivrosIndisponiveisException.class)
+    public ResponseEntity<?> handleLivrosIndisponiveis(LivrosIndisponiveisException ex) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("mensagem", ex.getMessage());
+        body.put("livrosIndisponiveis", ex.getTitulos());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
 }

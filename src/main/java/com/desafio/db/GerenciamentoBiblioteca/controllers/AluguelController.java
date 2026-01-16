@@ -3,6 +3,7 @@ package com.desafio.db.GerenciamentoBiblioteca.controllers;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelResponse;
 import com.desafio.db.GerenciamentoBiblioteca.service.AluguelServiceI;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class AluguelController {
     private final AluguelServiceI serviceI;
 
-    ResponseEntity<AluguelResponse> cadastrar(AluguelRequest dto){
+    @PostMapping
+    ResponseEntity<AluguelResponse> cadastrar(@RequestBody @Valid AluguelRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceI.cadastrar(dto));
     }
 

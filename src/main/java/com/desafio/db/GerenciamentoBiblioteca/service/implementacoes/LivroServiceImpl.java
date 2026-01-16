@@ -10,6 +10,7 @@ import com.desafio.db.GerenciamentoBiblioteca.exceptions.IsbnJaExistenteExceptio
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.LivroNaoEncontradoException;
 import com.desafio.db.GerenciamentoBiblioteca.mappers.LivroMapper;
 import com.desafio.db.GerenciamentoBiblioteca.repository.LivroRepository;
+import com.desafio.db.GerenciamentoBiblioteca.service.AutorServiceI;
 import com.desafio.db.GerenciamentoBiblioteca.service.LivroServiceI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class LivroServiceImpl implements LivroServiceI {
     private final LivroRepository repository;
     private static final LivroMapper mapper = LivroMapper.INSTANCE;
     private final AutorServiceImpl autorService;
+    private final AutorServiceI autorServiceI;
 
     @Override
     public LivroResponse cadastrar(LivroRequest dto) {
@@ -40,7 +42,7 @@ public class LivroServiceImpl implements LivroServiceI {
     public LivroResponse atualizar(Long id, LivroAtualiza atualizacoes) {
         Livro livro = buscar(id);
         mapper.toUpdate(atualizacoes, livro);
-        repository.save(livro);
+        livro = repository.save(livro);
         return mapper.toResponse(livro);
     }
 

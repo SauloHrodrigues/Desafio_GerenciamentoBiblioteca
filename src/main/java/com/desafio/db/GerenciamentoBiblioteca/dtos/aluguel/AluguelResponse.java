@@ -1,5 +1,7 @@
 package com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel;
 
+import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
+import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioResponse;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Locatario;
 
@@ -8,8 +10,8 @@ import java.util.List;
 
 public record AluguelResponse(
         Long id,
-        Locatario locatario,
-        List<Livro> livros,
         LocalDate retirada,
-        LocalDate devolucao
+        LocalDate devolucao,
+        LocatarioResponse locatario,
+        List<LivroResponse> livros
 ) {}
