@@ -53,9 +53,8 @@ public class LivroController {
 
     // buscar pelo titulo
     @GetMapping("/titulo")
-    public ResponseEntity<Page<LivroResponse>> buscarPorNome(@RequestParam String titulo,
-                                                             @PageableDefault(size = 10, sort = {"titulo"}) Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorTitulo(titulo, pageable));
+    public ResponseEntity<LivroResponse> buscarPorTitulo(@RequestParam String titulo) {
+        return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorTitulo(titulo));
     }
 
     // buscar pela categoria
@@ -67,7 +66,7 @@ public class LivroController {
     }
     // listar pelo id do autor
     @GetMapping("/id/autor")
-    public ResponseEntity<Page<LivroResponse>> buscarPorIdDoAutor(@RequestParam Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorIdDoAutor(id));
+    public ResponseEntity<Page<LivroResponse>> buscarPorIdDoAutor(@RequestParam Long id,Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorIdDoAutor(id,pageable));
     }
 }

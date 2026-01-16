@@ -17,6 +17,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
     }
 
+ @ExceptionHandler(LivroNaoEncontradoException.class)
+    public ResponseEntity<Object> handlerLivroNaoEncontradoException(LivroNaoEncontradoException mensagem) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
+    }
+
     @ExceptionHandler(LocatarioNaoEncontradoException.class)
     public ResponseEntity<Object> handlerLocatarioNaoEncontradoException(LocatarioNaoEncontradoException mensagem) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
@@ -24,6 +29,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CpfJaExistenteException.class)
     public ResponseEntity<Object> handlerCpfJaExitenteException(CpfJaExistenteException mensagem) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
+    }
+
+    @ExceptionHandler(IsbnJaExistenteException.class)
+    public ResponseEntity<Object> handlerIsbnJaExitenteException(IsbnJaExistenteException mensagem) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
     }
 
@@ -39,24 +49,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(erros);
     }
-
-//    @ExceptionHandler(DataIntegrityViolationException.class)
-//    public ResponseEntity<Map<String, String>> handleDataIntegrityViolation(
-//            DataIntegrityViolationException ex
-//    ) {
-//
-//        String mensagem = "Violação de integridade de dados.";
-//
-//        if (ex.getMessage() != null && ex.getMessage().contains("cpf")) {
-//            mensagem = "CPF já cadastrado.";
-//        }
-//
-//        Map<String, String> erro = Map.of(
-//                "erro", mensagem
-//        );
-//
-//        return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
-//    }
-
 
 }

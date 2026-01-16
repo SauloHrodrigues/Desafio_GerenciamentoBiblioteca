@@ -1,5 +1,6 @@
 package com.desafio.db.GerenciamentoBiblioteca.entity;
 
+import com.desafio.db.GerenciamentoBiblioteca.enun.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class Aluguel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locatario_id", nullable = false)
     private Locatario locatario;
 
@@ -35,6 +36,6 @@ public class Aluguel {
     public void adicionarLivro(Livro livro) {
         livros.add(livro);
         livro.getAlugueis().add(this);
-        livro.setDisponivel(false);
+        livro.setStatus(Status.ALUGADO);
     }
 }

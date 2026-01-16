@@ -24,9 +24,9 @@ public interface LivroServiceI {
     LivroResponse buscarPorId(Long id);
 
     // buscar pelo titulo
-    Page<LivroResponse> buscarPorTitulo(String titulo, Pageable pageable);
+    LivroResponse buscarPorTitulo(String titulo);
     // buscar pela categoria
     Page<LivroResponse> buscarPorCategoria(CategoriaDeLivro categoria, Pageable pageable);
     // listar pelo id do autor
-    Page<LivroResponse> buscarPorIdDoAutor(Long id);
+    Page<LivroResponse> buscarPorIdDoAutor(Long id, Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package com.desafio.db.GerenciamentoBiblioteca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -20,5 +21,6 @@ public class Autor extends Pessoa {
     private Integer anoDeNascimento;
 
     @ManyToMany(mappedBy = "autores")
+    @JsonIgnore
     private List<Livro> livros = new ArrayList<>();
 }

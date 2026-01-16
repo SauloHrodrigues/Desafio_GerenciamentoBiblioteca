@@ -9,6 +9,5 @@ public record LivroAtualiza(
         String titulo,
         String isbn,
         LocalDate dataDePublicacao,
-        CategoriaDeLivro categoria,
-        List<Long> idAutores
+        CategoriaDeLivro categoria
 ) {}
