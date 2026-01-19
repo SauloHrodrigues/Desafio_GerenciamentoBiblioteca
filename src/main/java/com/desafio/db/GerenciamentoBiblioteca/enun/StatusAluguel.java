@@ -1,12 +1,12 @@
 package com.desafio.db.GerenciamentoBiblioteca.enun;
 
-public enum Status {
-    DISPONIVEL("Disponível"),
-    ALUGADO("Alugado");
+public enum StatusAluguel {
+    ATIVO("Ativo"),
+    INATIVO("Inativo");
 
     private final String descricao;
 
-    Status(String descricao) {
+    StatusAluguel(String descricao) {
         this.descricao = descricao;
     }
 

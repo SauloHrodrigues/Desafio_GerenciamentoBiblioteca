@@ -6,6 +6,7 @@ import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Autor;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
 import com.desafio.db.GerenciamentoBiblioteca.enun.CategoriaDeLivro;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusLivro;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.IsbnJaExistenteException;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.LivroNaoEncontradoException;
 import com.desafio.db.GerenciamentoBiblioteca.mappers.LivroMapper;
@@ -81,7 +82,8 @@ public class LivroServiceImpl implements LivroServiceI {
         return repository.findByAutores_Id(id, pageable).map(mapper::toResponse);
     }
 
-    protected Livro adicionaAutores(List<Long> idAutores, Livro livro) {
+    @Override
+    public Livro adicionaAutores(List<Long> idAutores, Livro livro) {
         List<Autor> autores = new ArrayList<>();
         for (Long id : idAutores) {
             livro.adicionarAutor(autorService.buscar(id));
@@ -89,7 +91,8 @@ public class LivroServiceImpl implements LivroServiceI {
         return livro;
     }
 
-    protected Livro buscar(Long id) {
+    @Override
+    public Livro buscar(Long id) {
         return repository.findById(id).orElseThrow(
                 () -> new LivroNaoEncontradoException(
                         "Não foi encontrado nenhum livro para o ID {" + id + "}"
@@ -97,12 +100,19 @@ public class LivroServiceImpl implements LivroServiceI {
         );
     }
 
-    protected void validaIsbn(String isbn) {
+    @Override
+    public void validaIsbn(String isbn) {
         repository.findLivroByIsbn(isbn)
                 .ifPresent(livro -> {
                     throw new IsbnJaExistenteException(
                             "O ISBN {" + isbn + "} já consta em nosso banco."
                     );
                 });
+    }
+
+    @Override
+    public void devolveLivro(Livro livro){
+        livro.setStatusLivro(StatusLivro.DISPONIVEL);
+        repository.save(livro);
     }
 }

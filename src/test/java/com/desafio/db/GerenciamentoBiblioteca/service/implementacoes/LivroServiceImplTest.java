@@ -3,15 +3,12 @@ package com.desafio.db.GerenciamentoBiblioteca.service.implementacoes;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
-import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioResponse;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Autor;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
-import com.desafio.db.GerenciamentoBiblioteca.entity.Locatario;
 import com.desafio.db.GerenciamentoBiblioteca.enun.CategoriaDeLivro;
-import com.desafio.db.GerenciamentoBiblioteca.enun.Status;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusLivro;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.IsbnJaExistenteException;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.LivroNaoEncontradoException;
-import com.desafio.db.GerenciamentoBiblioteca.exceptions.LocatarioNaoEncontradoException;
 import com.desafio.db.GerenciamentoBiblioteca.fixtures.LivroFixture;
 import com.desafio.db.GerenciamentoBiblioteca.repository.LivroRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +72,7 @@ class LivroServiceImplTest {
         assertEquals(this.livroRequest.titulo().toLowerCase(),resposta.titulo());
         assertEquals(this.livroRequest.isbn(),resposta.isbn());
         assertEquals(this.livroRequest.dataDePublicacao(),resposta.dataDePublicacao());
-        assertEquals(Status.DISPONIVEL,resposta.status());
+        assertEquals(StatusLivro.DISPONIVEL,resposta.statusLivro());
     }
 
     @Test

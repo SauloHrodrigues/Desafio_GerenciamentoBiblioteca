@@ -1,7 +1,7 @@
 package com.desafio.db.GerenciamentoBiblioteca.entity;
 
 import com.desafio.db.GerenciamentoBiblioteca.enun.CategoriaDeLivro;
-import com.desafio.db.GerenciamentoBiblioteca.enun.Status;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusLivro;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class Livro {
     @JsonIgnore
     private List<Autor> autores = new ArrayList<>();
 
-    private Status status;
+    private StatusLivro statusLivro;
 
     @ManyToMany(mappedBy = "livros")
     private List<Aluguel> alugueis = new ArrayList<>();

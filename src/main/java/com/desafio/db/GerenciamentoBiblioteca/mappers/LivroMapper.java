@@ -6,6 +6,9 @@ import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Mapper
 public interface LivroMapper {
@@ -14,7 +17,7 @@ public interface LivroMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "autores", ignore = true)
     @Mapping(target = "alugueis", ignore = true)
-    @Mapping(target = "status", expression = "java(Status.DISPONIVEL)")
+    @Mapping(target = "statusLivro", expression = "java(StatusLivro.DISPONIVEL)")
     @Mapping(target = "titulo", expression = "java(request.titulo() != null ? request.titulo().toLowerCase() : null)")
     Livro toEntity(LivroRequest request);
 
@@ -26,4 +29,6 @@ public interface LivroMapper {
 
     @Mapping(target = "id", source = "id")
     LivroResponse toResponse(Livro livro);
+
+    List<LivroResponse> toResponse(List<Livro> livro);
 }

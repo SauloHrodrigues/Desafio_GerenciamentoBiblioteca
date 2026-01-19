@@ -1,6 +1,7 @@
 package com.desafio.db.GerenciamentoBiblioteca.entity;
 
-import com.desafio.db.GerenciamentoBiblioteca.enun.Status;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusAluguel;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusLivro;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,10 +33,11 @@ public class Aluguel {
     private List<Livro> livros = new ArrayList<>();
     private LocalDate retirada;
     private LocalDate devolucao;
+    private StatusAluguel status;
 
     public void adicionarLivro(Livro livro) {
         livros.add(livro);
         livro.getAlugueis().add(this);
-        livro.setStatus(Status.ALUGADO);
+        livro.setStatusLivro(StatusLivro.ALUGADO);
     }
 }

@@ -2,6 +2,7 @@ package com.desafio.db.GerenciamentoBiblioteca.controllers;
 
 import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.aluguel.AluguelResponse;
+import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
 import com.desafio.db.GerenciamentoBiblioteca.service.AluguelServiceI;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class AluguelController {
     }
 
     @GetMapping("/{id}/tpdos_livros")
-    public ResponseEntity<Page<AluguelResponse>> buscarLivros(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarLivros(id)));
+    public ResponseEntity<Page<LivroResponse>> buscarLivros(@PathVariable Long id,@PageableDefault(size = 10, sort = {"titulo"})Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarLivros(id,pageable)));
     }
 
     @GetMapping
@@ -33,8 +34,20 @@ public class AluguelController {
         return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarAlugueis(pageable)));
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<Page<AluguelResponse>> listarAlugueisComFiltro(@PageableDefault(size = 10, sort = {"Locatario"}) Pageable pageable,
+                                                                         @RequestParam String status){
+        return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarAlugueis(status,pageable)));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AluguelResponse> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body((serviceI.buscarPorId(id)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> retornarAluguel(@PathVariable Long id){
+        serviceI.devolverAluguel(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

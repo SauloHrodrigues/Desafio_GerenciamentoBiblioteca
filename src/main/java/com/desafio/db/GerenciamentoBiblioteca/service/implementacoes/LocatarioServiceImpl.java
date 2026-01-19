@@ -57,7 +57,7 @@ public class LocatarioServiceImpl implements LocatarioServiceI {
         return mapper.toResponse(buscar(id));
     }
 
-    protected Locatario buscar(Long id){
+    public Locatario buscar(Long id){
             return repository.findById(id).orElseThrow(
                     ()-> new LocatarioNaoEncontradoException("Não foi possível localizar nenhum" +
                             " locatário para o ID: #'{"+id+"}'")

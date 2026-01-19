@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
     }
 
+ @ExceptionHandler(AluguelNaoEncontradoException.class)
+    public ResponseEntity<Object> handlerAluguelNaoEncontradoException(AluguelNaoEncontradoException mensagem) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
+    }
+
     @ExceptionHandler(LocatarioNaoEncontradoException.class)
     public ResponseEntity<Object> handlerLocatarioNaoEncontradoException(LocatarioNaoEncontradoException mensagem) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
