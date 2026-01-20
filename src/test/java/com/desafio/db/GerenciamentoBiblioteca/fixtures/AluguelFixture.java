@@ -44,4 +44,14 @@ public class AluguelFixture {
         aluguel.setDevolucao(LocalDate.now().plusDays(2));
         return aluguel;
     }
+
+    public static Aluguel toEntitySemLivro(){
+        Aluguel aluguel = new Aluguel();
+        aluguel.setId(ID);
+        aluguel.setLocatario(LOCATARIO);
+        aluguel.setRetirada(DATA_DE_RETIRADA);
+        aluguel.setDevolucao(DATA_DE_DEVOLUCAO);
+        aluguel.setStatus(StatusAluguel.ATIVO);
+        return aluguel;
+    }
 }

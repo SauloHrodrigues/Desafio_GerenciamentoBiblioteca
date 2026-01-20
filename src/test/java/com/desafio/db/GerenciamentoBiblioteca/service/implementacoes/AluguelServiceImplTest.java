@@ -236,16 +236,34 @@ class AluguelServiceImplTest {
 
     @Test
     @DisplayName("Deve adicionar um livro ao aluguel.")
-    void adicionaLivros() {
-//        Livro livro = LivroFixture.entity();
-//        Aluguel aluguelLocal = aluguel;
-//
-//        when(livroService.buscar(livro.getId())).thenReturn(livro);
-//
-//        Aluguel resposta = service.adicionaLivros(request,aluguelLocal);
-//
-//        assertNotNull(resposta);
-//        System.out.println(aluguelLocal.getLivros().size());
+    void deveAdicionaLivros() {
+        Livro livro = LivroFixture.entity();
+        Aluguel aluguel = AluguelFixture.toEntitySemLivro();
 
+        when(livroService.buscar(livro.getId())).thenReturn(livro);
+
+        Aluguel resposta = service.adicionaLivros(request,aluguel);
+
+        assertNotNull(resposta);
+        assertNotNull(resposta.getLivros().get(0).getAutores());
+        assertEquals(livro.getTitulo(),resposta.getLivros().get(0).getTitulo());
+        assertEquals(livro.getIsbn(),resposta.getLivros().get(0).getIsbn());
+    }
+
+    @Test
+    @DisplayName("Deve lançar excessão ao tentar adicionar um livro já alugado.")
+    void deveLancarExcessaoAoAdicionaLivrosJaAlugados() {
+        Livro livro = LivroFixture.entity();
+        livro.setStatusLivro(StatusLivro.ALUGADO);
+        Aluguel aluguel = AluguelFixture.toEntitySemLivro();
+
+        when(livroService.buscar(livro.getId())).thenReturn(livro);
+
+        LivrosIndisponiveisException excessao = assertThrows(LivrosIndisponiveisException.class, ()->{
+            service.adicionaLivros(request,aluguel);
+        });
+
+        assertTrue(excessao.getTitulos().contains(livro.getTitulo()));
+        verify(livroService).buscar(livro.getId());
     }
 }
