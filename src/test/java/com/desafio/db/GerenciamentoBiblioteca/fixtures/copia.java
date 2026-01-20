@@ -1,0 +1,23 @@
+package com.desafio.db.GerenciamentoBiblioteca.fixtures;
+
+public class copia {
+//    spring:
+//    datasource:
+//    url: ${DB_URL}
+//    username: ${POSTGRES_USER}
+//    password: ${POSTGRES_PASSWORD}
+//    driver-class-name: org.postgresql.Driver
+//
+//    jpa:
+//    hibernate:
+//    ddl-auto: update
+//    show-sql: true
+//    properties:
+//    hibernate:
+//    format_sql: true
+//    dialect: org.hibernate.dialect.PostgreSQLDialect
+//
+//    flyway:
+//    enabled: false
+
+}
