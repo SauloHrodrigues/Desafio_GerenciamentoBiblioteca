@@ -27,7 +27,6 @@ public class LivroServiceImpl implements LivroServiceI {
 
     private final LivroRepository repository;
     private static final LivroMapper mapper = LivroMapper.INSTANCE;
-    private final AutorServiceImpl autorService;
     private final AutorServiceI autorServiceI;
 
     @Override
@@ -49,7 +48,7 @@ public class LivroServiceImpl implements LivroServiceI {
 
     @Override
     public void apagar(Long id) {
-
+//TODO
     }
 
     @Override
@@ -86,7 +85,7 @@ public class LivroServiceImpl implements LivroServiceI {
     public Livro adicionaAutores(List<Long> idAutores, Livro livro) {
         List<Autor> autores = new ArrayList<>();
         for (Long id : idAutores) {
-            livro.adicionarAutor(autorService.buscar(id));
+            livro.adicionarAutor(autorServiceI.buscar(id));
         }
         return livro;
     }

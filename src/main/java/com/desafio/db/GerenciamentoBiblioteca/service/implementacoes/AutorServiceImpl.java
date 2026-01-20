@@ -60,12 +60,14 @@ public class AutorServiceImpl implements AutorServiceI {
         return autores;
     }
 
-    protected Autor buscar(String nome){
+    @Override
+    public Autor buscar(String nome){
         return repository.findAutorByNome(nome).orElseThrow(
                 ()-> new AutorNaoEncontradoException("Não foi encontrado nenhum autor com o nome '{"+nome+"}'")
         );
     }
-    protected Autor buscar(Long id){
+    @Override
+    public Autor buscar(Long id){
         return repository.findById(id).orElseThrow(
                 ()-> new AutorNaoEncontradoException("Não foi encontrado nenhum autor para o ID: #'{"+id+"}'")
         );
