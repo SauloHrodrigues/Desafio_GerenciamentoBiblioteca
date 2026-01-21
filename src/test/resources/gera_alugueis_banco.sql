@@ -1,7 +1,15 @@
-INSERT INTO alugueis (id,retirada, devolucao, status,locatario_id)
-VALUES (1,'2025-01-01','2025-01-10',0, 1),
-       (2,'2025-01-01','2025-01-10',0, 1);
+INSERT INTO alugueis (id, retirada, devolucao, status, locatario_id)
+VALUES (1, '2025-01-01', '2025-01-10', 0, 1),
+       (2, '2025-01-01', '2025-01-10', 0, 1),
+       (3, '2025-01-01', '2025-01-10', 1, 1),
+       (4, '2025-01-01', '2025-01-10', 1, 1),
+       (5, '2025-01-01', '2025-01-10', 1, 1),
+       (6, '2025-01-01', '2025-01-10', 1, 1);
 
 INSERT INTO aluguel_livros (aluguel_id, livro_id)
 VALUES (1, 1),
-    (2, 2);
+       (2, 2),
+       (3, 2),
+       (4, 2),
+       (5, 2),
+       (6, 2);

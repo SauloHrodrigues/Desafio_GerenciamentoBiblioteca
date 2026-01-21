@@ -24,7 +24,7 @@ public class AluguelController {
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceI.cadastrar(dto));
     }
 
-    @GetMapping("/{id}/tpdos_livros")
+    @GetMapping("/{id}/todos_livros")
     public ResponseEntity<Page<LivroResponse>> buscarLivros(@PathVariable Long id,@PageableDefault(size = 10, sort = {"titulo"})Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body((serviceI.listarLivros(id,pageable)));
     }

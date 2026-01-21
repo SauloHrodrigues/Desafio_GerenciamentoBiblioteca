@@ -75,6 +75,9 @@ public class AluguelServiceImpl implements AluguelServiceI {
     @Override
     public void devolverAluguel(Long id){
         Aluguel aluguel = buscar(id);
+        if(aluguel.getStatus()== StatusAluguel.INATIVO ){
+            throw new AluguelNaoEncontradoException("O Aluguel já id#"+id+"esta inativo.");
+        }
         aluguel.setStatus(StatusAluguel.INATIVO);
         for (Livro livro: aluguel.getLivros()){
             livroServiceI.devolveLivro(livro);
