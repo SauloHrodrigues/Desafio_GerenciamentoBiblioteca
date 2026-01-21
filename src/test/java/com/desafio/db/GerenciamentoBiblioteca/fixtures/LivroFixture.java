@@ -20,7 +20,7 @@ public class LivroFixture {
     public static final Autor AUTOR_02 = AutorFixtures.entity();
     public static final List<Autor> AUTORES = List.of(AUTOR_01, AUTOR_02);
 
-    public static LivroRequest reguest(){
+    public static LivroRequest request(){
         List<Long>ids = List.of(AUTOR_01.getId(),AUTOR_02.getId());
         return new LivroRequest(TITULO,ISBN,DATA_DE_PUBLICACAO,CATEGORIA,ids);
     }

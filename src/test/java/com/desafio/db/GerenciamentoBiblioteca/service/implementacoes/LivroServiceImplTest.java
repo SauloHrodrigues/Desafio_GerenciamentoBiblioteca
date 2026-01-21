@@ -50,7 +50,7 @@ class LivroServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        livroRequest = LivroFixture.reguest();
+        livroRequest = LivroFixture.request();
         livro = LivroFixture.entity();
     }
 
