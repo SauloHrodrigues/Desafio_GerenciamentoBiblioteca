@@ -1,5 +1,6 @@
 package com.desafio.db.GerenciamentoBiblioteca.mappers;
 
+import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAlugueisResponse;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioResponse;
@@ -19,7 +20,7 @@ public interface LocatarioMapper {
     Locatario toEntity(LocatarioRequest request);
 
     @Mapping(target = "cpf", source = "cpf", qualifiedByName = "formata_cpf")
-    LocatarioResponse toResponse(Locatario locatario);
+    LocatarioResponse toResponse(Locatario locatario);;
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "cpf", ignore = true)

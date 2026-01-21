@@ -26,28 +26,28 @@ public class LocatarioController {
     public ResponseEntity<LocatarioResponse> cadastrar(@RequestBody @Valid LocatarioRequest dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceI.cadastrar(dto));
     }
-    // atualizar
+
     @PatchMapping("/{id}")
     public ResponseEntity<LocatarioResponse> atualizar(@PathVariable Long id, @RequestBody @Valid LocatarioAtualiza atualizacoes){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.atualizar(id,atualizacoes));
     }
-    // excluir
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> apagar(@PathVariable Long id){
         serviceI.apagar(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    // listar todos
+
     @GetMapping
     public ResponseEntity<Page<LocatarioResponse>> buscar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.listarTodos(pageable));
     }
-    // buscar por id
+
     @GetMapping("/{id}")
     public ResponseEntity<LocatarioResponse> buscarPorId(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorId(id));
     }
-    // listar todos alugueis do locatario (entrada, saida e status do aluguel)
+
     @GetMapping("/id/alugueis")
     public ResponseEntity<LocatarioResponse> buscarPorNome(@RequestParam Long id){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.listarTodosAlugueis(id));

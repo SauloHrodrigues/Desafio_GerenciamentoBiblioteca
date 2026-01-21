@@ -1,5 +1,6 @@
 package com.desafio.db.GerenciamentoBiblioteca.service.implementacoes;
 
+import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAlugueisResponse;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioResponse;
