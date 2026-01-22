@@ -44,6 +44,7 @@ public class Livro {
     private List<Autor> autores = new ArrayList<>();
 
     private StatusLivro statusLivro;
+    private Boolean ativo = true;
 
     @ManyToMany(mappedBy = "livros")
     private List<Aluguel> alugueis = new ArrayList<>();

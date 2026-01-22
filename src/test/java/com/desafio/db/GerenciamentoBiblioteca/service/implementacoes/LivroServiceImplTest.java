@@ -63,7 +63,7 @@ class LivroServiceImplTest {
 
         when(autorService.buscar(idAutor01)).thenReturn(this.livro.getAutores().get(0));
         when(autorService.buscar(idAutor02)).thenReturn(this.livro.getAutores().get(1));
-        when(repository.findLivroByIsbn(isbn)).thenReturn(Optional.empty());
+        when(repository.findLivroByIsbnAndAtivoTrue(isbn)).thenReturn(Optional.empty());
         when(repository.save(any(Livro.class))).thenReturn(this.livro);
 
         LivroResponse resposta = service.cadastrar(this.livroRequest);
@@ -136,7 +136,7 @@ class LivroServiceImplTest {
     void deveBuscarUmLivroPeloTitulo() {
         String titulo = this.livroRequest.titulo();
 
-        when(repository.findByTituloIgnoreCase(titulo)).thenReturn(Optional.of(this.livro));
+        when(repository.findByTituloIgnoreCaseAndAtivoTrue(titulo)).thenReturn(Optional.of(this.livro));
 
         LivroResponse resposta = service.buscarPorTitulo(titulo);
 
@@ -152,7 +152,7 @@ class LivroServiceImplTest {
     void deveLancarExcessaoBuscarUmLivroPeloTitulo()  {
         String titulo="Qualquer";
 
-        when(repository.findByTituloIgnoreCase(titulo)).thenReturn(Optional.empty());
+        when(repository.findByTituloIgnoreCaseAndAtivoTrue(titulo)).thenReturn(Optional.empty());
 
         LivroNaoEncontradoException resposta = assertThrows(LivroNaoEncontradoException.class,
                 ()->{service.buscarPorTitulo(titulo);});
@@ -160,7 +160,7 @@ class LivroServiceImplTest {
         assertEquals(
                 "Não foi encontrado nenhum livro para o titulo {" + titulo + "}", resposta.getMessage());
 
-        verify(repository).findByTituloIgnoreCase(titulo);
+        verify(repository).findByTituloIgnoreCaseAndAtivoTrue(titulo);
     }
 
     @Test
@@ -171,13 +171,13 @@ class LivroServiceImplTest {
         Pageable pageable = PageRequest.of(0, 15);
         Page<Livro> pageLivros = new PageImpl<>(livros, pageable, livros.size());
 
-        when(repository.findByAutores_Id(idAutor,pageable)).thenReturn(pageLivros);
+        when(repository.findByAutores_IdAndAtivoTrue(idAutor,pageable)).thenReturn(pageLivros);
 
         Page<LivroResponse> resposta = service.buscarPorIdDoAutor(idAutor,pageable);
 
         assertNotNull(resposta);
         assertEquals(livros.size(), resposta.getContent().size());
-        verify(repository).findByAutores_Id(idAutor,pageable);
+        verify(repository).findByAutores_IdAndAtivoTrue(idAutor,pageable);
     }
 
     @Test
@@ -229,11 +229,11 @@ class LivroServiceImplTest {
     void deveValidaIsbn() {
         String isbn = livro.getIsbn();
 
-        when(repository.findLivroByIsbn(isbn)).thenReturn(Optional.empty());
+        when(repository.findLivroByIsbnAndAtivoTrue(isbn)).thenReturn(Optional.empty());
 
         service.validaIsbn(isbn);
 
-        verify(repository).findLivroByIsbn(isbn);
+        verify(repository).findLivroByIsbnAndAtivoTrue(isbn);
     }
 
     @Test
@@ -241,7 +241,7 @@ class LivroServiceImplTest {
     void deveLancarExcessoValidaIsbn() {
         String isbn = livro.getIsbn();
 
-        when(repository.findLivroByIsbn(isbn)).thenReturn(Optional.of(this.livro));
+        when(repository.findLivroByIsbnAndAtivoTrue(isbn)).thenReturn(Optional.of(this.livro));
 
         IsbnJaExistenteException resposta = assertThrows(IsbnJaExistenteException.class,()->{
             service.validaIsbn(isbn);

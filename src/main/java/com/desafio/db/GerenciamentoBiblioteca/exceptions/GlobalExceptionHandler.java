@@ -37,6 +37,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body( mensagem.getMessage());
     }
 
+    @ExceptionHandler(LivroAlugadoException.class)
+    public ResponseEntity<Object> handlerLivroAlugadoException(LivroAlugadoException mensagem) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body( mensagem.getMessage());
+    }
+
     @ExceptionHandler(CpfJaExistenteException.class)
     public ResponseEntity<Object> handlerCpfJaExitenteException(CpfJaExistenteException mensagem) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());

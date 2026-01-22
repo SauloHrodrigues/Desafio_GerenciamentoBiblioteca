@@ -3,11 +3,14 @@ package com.desafio.db.GerenciamentoBiblioteca.service.implementacoes;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.livro.LivroResponse;
+import com.desafio.db.GerenciamentoBiblioteca.entity.Aluguel;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Autor;
 import com.desafio.db.GerenciamentoBiblioteca.entity.Livro;
 import com.desafio.db.GerenciamentoBiblioteca.enun.CategoriaDeLivro;
+import com.desafio.db.GerenciamentoBiblioteca.enun.StatusAluguel;
 import com.desafio.db.GerenciamentoBiblioteca.enun.StatusLivro;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.IsbnJaExistenteException;
+import com.desafio.db.GerenciamentoBiblioteca.exceptions.LivroAlugadoException;
 import com.desafio.db.GerenciamentoBiblioteca.exceptions.LivroNaoEncontradoException;
 import com.desafio.db.GerenciamentoBiblioteca.mappers.LivroMapper;
 import com.desafio.db.GerenciamentoBiblioteca.repository.LivroRepository;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -48,12 +52,20 @@ public class LivroServiceImpl implements LivroServiceI {
 
     @Override
     public void apagar(Long id) {
-//TODO
+        Livro livro = buscar(id);
+       for(Aluguel aluguel: livro.getAlugueis()){
+           if(aluguel.getStatus()== StatusAluguel.ATIVO) {
+               throw new LivroAlugadoException("Não foi possível remover o livro, pois ele está" +
+                       " alugado no aluguel de ID: #" + aluguel.getId() + ".");
+           }
+       }
+       livro.setAtivo(false);
+       repository.save(livro);
     }
 
     @Override
     public Page<LivroResponse> listarTodos(Pageable pageable) {
-        return repository.findAll(pageable).map(mapper::toResponse);
+        return repository.findAllByAtivoTrue(pageable).map(mapper::toResponse);
     }
 
     @Override
@@ -64,7 +76,7 @@ public class LivroServiceImpl implements LivroServiceI {
 
     @Override
     public LivroResponse buscarPorTitulo(String titulo) {
-        Livro livro = repository.findByTituloIgnoreCase(titulo).orElseThrow(
+        Livro livro = repository.findByTituloIgnoreCaseAndAtivoTrue(titulo).orElseThrow(
                 () -> new LivroNaoEncontradoException(
                         "Não foi encontrado nenhum livro para o titulo {" + titulo + "}"
                 ));
@@ -73,12 +85,12 @@ public class LivroServiceImpl implements LivroServiceI {
 
     @Override
     public Page<LivroResponse> buscarPorCategoria(CategoriaDeLivro categoria, Pageable pageable) {
-        return repository.findByCategoria(categoria, pageable).map(mapper::toResponse);
+        return repository.findByCategoriaAndAtivoTrue(categoria, pageable).map(mapper::toResponse);
     }
 
     @Override
     public Page<LivroResponse> buscarPorIdDoAutor(Long id, Pageable pageable) {
-        return repository.findByAutores_Id(id, pageable).map(mapper::toResponse);
+        return repository.findByAutores_IdAndAtivoTrue(id, pageable).map(mapper::toResponse);
     }
 
     @Override
@@ -92,16 +104,18 @@ public class LivroServiceImpl implements LivroServiceI {
 
     @Override
     public Livro buscar(Long id) {
-        return repository.findById(id).orElseThrow(
-                () -> new LivroNaoEncontradoException(
-                        "Não foi encontrado nenhum livro para o ID {" + id + "}"
-                )
-        );
+        Optional<Livro> livro = repository.findById(id);
+        if(livro.isEmpty() || livro.get().getAtivo() == false){
+            throw new LivroNaoEncontradoException(
+                    "Não foi encontrado nenhum livro para o ID {" + id + "}"
+            );
+        }
+     return livro.get();
     }
 
-    @Override
+
     public void validaIsbn(String isbn) {
-        repository.findLivroByIsbn(isbn)
+        repository.findLivroByIsbnAndAtivoTrue(isbn)
                 .ifPresent(livro -> {
                     throw new IsbnJaExistenteException(
                             "O ISBN {" + isbn + "} já consta em nosso banco."

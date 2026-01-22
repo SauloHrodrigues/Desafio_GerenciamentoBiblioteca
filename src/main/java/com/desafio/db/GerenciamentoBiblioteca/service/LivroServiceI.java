@@ -32,7 +32,7 @@ public interface LivroServiceI {
 
     void validaIsbn(String isbn);
 
-    public Livro adicionaAutores(List<Long> idAutores, Livro livro);
+    Livro adicionaAutores(List<Long> idAutores, Livro livro);
 
     void devolveLivro(Livro livro);
 }
