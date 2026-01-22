@@ -35,6 +35,7 @@ public class LivroFixture {
         livro.adicionarAutor(AUTOR_01);
         livro.adicionarAutor(AUTOR_02);
         livro.setStatusLivro(StatusLivro.DISPONIVEL);
+        livro.setAtivo(true);
         return livro;
     }
 }

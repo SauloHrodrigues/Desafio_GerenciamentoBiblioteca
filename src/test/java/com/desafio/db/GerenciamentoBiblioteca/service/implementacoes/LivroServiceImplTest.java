@@ -82,6 +82,7 @@ class LivroServiceImplTest {
         LivroAtualiza atualizacoes = new LivroAtualiza("O Segredo","1234567899874",null, CategoriaDeLivro.AUTOAJUDA);
 
         when(repository.findById(id)).thenReturn(Optional.of(this.livro));
+        when(repository.save(any(Livro.class))).thenReturn(livro);
 
         LivroResponse resposta = service.atualizar(id,atualizacoes);
 
@@ -95,7 +96,13 @@ class LivroServiceImplTest {
     @Test
     @DisplayName("Deve apagar um livro encontrado pelo id com sucesso.")
     void deveExcuirUmLivro() {
-        //TODO
+        long id = livro.getId();
+
+        when(repository.findById(id)).thenReturn(Optional.of(livro));
+
+        service.apagar(id);
+
+        verify(repository).findById(id);
     }
 
     @Test
@@ -105,13 +112,13 @@ class LivroServiceImplTest {
         Pageable pageable = PageRequest.of(0, 15);
         Page<Livro> pageLivros = new PageImpl<>(livros, pageable, livros.size());
 
-        when(repository.findAll(pageable)).thenReturn(pageLivros);
+        when(repository.findAllByAtivoTrue(pageable)).thenReturn(pageLivros);
 
         Page<LivroResponse> resposta = service.listarTodos(pageable);
 
         assertNotNull(resposta);
         assertEquals(livros.size(), resposta.getContent().size());
-        verify(repository).findAll(pageable);
+        verify(repository).findAllByAtivoTrue(pageable);
     }
 
     @Test
