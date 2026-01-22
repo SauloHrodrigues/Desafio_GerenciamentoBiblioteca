@@ -14,6 +14,7 @@ public interface LocatarioMapper {
 
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "alugueis", ignore = true)
     @Mapping(target = "cpf",expression = "java(request.cpf().replaceAll(\"\\\\D\", \"\"))")
     @Mapping(target = "nome", expression = "java(request.nome() != null ? request.nome().toLowerCase() : null)")

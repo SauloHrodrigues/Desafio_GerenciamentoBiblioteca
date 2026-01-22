@@ -19,6 +19,7 @@ public class Locatario extends Pessoa{
     private String email;
     @Column(name = "data_de_nascimento", nullable = false)
     private LocalDate dataDeNascimento;
+    private Boolean ativo = true;
 
     @OneToMany(mappedBy = "locatario", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Aluguel> alugueis = new ArrayList<>();

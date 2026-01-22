@@ -32,6 +32,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body( mensagem.getMessage());
     }
 
+    @ExceptionHandler(AluguelAtivoException.class)
+    public ResponseEntity<Object> handlerAluguelAtivoException(AluguelAtivoException mensagem) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body( mensagem.getMessage());
+    }
+
     @ExceptionHandler(CpfJaExistenteException.class)
     public ResponseEntity<Object> handlerCpfJaExitenteException(CpfJaExistenteException mensagem) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( mensagem.getMessage());
