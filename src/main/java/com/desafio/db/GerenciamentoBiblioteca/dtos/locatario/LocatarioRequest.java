@@ -28,9 +28,4 @@ public record LocatarioRequest(
         @NotNull(message = "A data de nascimento é campo de preenchimento obrigatório.")
         @Past(message = "A data de nascimento deve ser uma data no passado.")
         LocalDate dataDeNascimento
-) {
-        public LocatarioRequest {
-
-        }
-
-}
+) {}

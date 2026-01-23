@@ -1,6 +1,5 @@
 package com.desafio.db.GerenciamentoBiblioteca.mappers;
 
-import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAlugueisResponse;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.locatario.LocatarioResponse;
@@ -14,18 +13,18 @@ public interface LocatarioMapper {
 
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", ignore = true)
     @Mapping(target = "alugueis", ignore = true)
-    @Mapping(target = "cpf",expression = "java(request.cpf().replaceAll(\"\\\\D\", \"\"))")
+    @Mapping(target = "ativo", expression = "java(true)")
+    @Mapping(target = "cpf", expression = "java(request.cpf().replaceAll(\"\\\\D\", \"\"))")
     @Mapping(target = "nome", expression = "java(request.nome() != null ? request.nome().toLowerCase() : null)")
     Locatario toEntity(LocatarioRequest request);
 
     @Mapping(target = "cpf", source = "cpf", qualifiedByName = "formata_cpf")
-    LocatarioResponse toResponse(Locatario locatario);;
+    LocatarioResponse toResponse(Locatario locatario);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "cpf", ignore = true)
-    @Mapping(target = "nome",expression = "java(atualizacoes.nome() != null ? atualizacoes.nome().toLowerCase() : locatario.getNome())")
+    @Mapping(target = "nome", expression = "java(atualizacoes.nome() != null ? atualizacoes.nome().toLowerCase() : locatario.getNome())")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void toUpdate(LocatarioAtualiza atualizacoes, @MappingTarget Locatario locatario);
 
