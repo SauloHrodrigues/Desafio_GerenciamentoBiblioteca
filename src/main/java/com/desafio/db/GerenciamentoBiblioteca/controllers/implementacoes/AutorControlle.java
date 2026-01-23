@@ -1,5 +1,6 @@
-package com.desafio.db.GerenciamentoBiblioteca.controllers;
+package com.desafio.db.GerenciamentoBiblioteca.controllers.implementacoes;
 
+import com.desafio.db.GerenciamentoBiblioteca.controllers.AutorSwaggerI;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.autor.AutorAtualiza;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.autor.AutorRequest;
 import com.desafio.db.GerenciamentoBiblioteca.dtos.autor.AutorResponse;
@@ -8,7 +9,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/autores")
-public class AutorControlle {
+public class AutorControlle implements AutorSwaggerI {
     private final AutorServiceI serviceI;
+
 
     @PostMapping
     public ResponseEntity<AutorResponse> cadastrar(@RequestBody @Valid AutorRequest dto){
@@ -25,7 +26,7 @@ public class AutorControlle {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AutorResponse> atualizar(@PathVariable Long id, @RequestBody @Valid AutorAtualiza atualizacoes){
+    public ResponseEntity<AutorResponse> atualizar(@PathVariable Long id,@RequestBody @Valid AutorAtualiza atualizacoes){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.atualizar(id,atualizacoes));
     }
 
@@ -36,7 +37,7 @@ public class AutorControlle {
     }
 
     @GetMapping("/nome")
-    public ResponseEntity<AutorResponse> buscarPorNome(@RequestParam String nome){
+    public ResponseEntity<AutorResponse> buscarPorNome(  @RequestParam String nome){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.buscarPorNome(nome));
     }
 
@@ -46,7 +47,7 @@ public class AutorControlle {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AutorResponse>> buscar(@PageableDefault(size = 10, sort = {"nome"})Pageable pageable){
+    public ResponseEntity<Page<AutorResponse>> buscar(Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(serviceI.listarTodos(pageable));
     }
 }
