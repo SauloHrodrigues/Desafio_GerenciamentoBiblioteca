@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"/limpa_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 public class LocatarioTest {
 
     @Autowired

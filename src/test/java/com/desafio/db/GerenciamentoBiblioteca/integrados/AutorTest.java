@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = {"/limpa_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 public class AutorTest {
 
     @Autowired
@@ -30,6 +31,7 @@ public class AutorTest {
 
     @Test
     @DisplayName("Deve cadastrar uma pessoa com sucesso!")
+    @Sql(scripts = {"/limpa_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void deveCadastrarUmaNovaPessoaComSucesso() {
         AutorRequest dto = AutorFixtures.request();
         ResponseEntity<AutorResponse> resposta = template.postForEntity(
@@ -41,6 +43,27 @@ public class AutorTest {
         assertThat(resposta.getBody().nome()).isEqualTo(dto.nome().toLowerCase());
         assertThat(resposta.getBody().cpf()).isEqualTo(dto.cpf());
         assertThat(resposta.getBody().sexo()).isEqualTo(dto.sexo());
+    }
+
+    @Test
+    @DisplayName("Deve buscar um autor pelo nome com sucesso!")
+    @Sql(scripts = {"/limpa_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/gera_autor_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void deveBuscarUmAutorPeloNomeComSucesso() {
+        String nome = "Machado de Assis";
+
+        ResponseEntity<AutorResponse> resposta =
+                template.exchange(
+                        "/autores/nome?nome={"+nome+"}",
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<AutorResponse>() {},
+                        nome
+                );
+        assertThat(resposta.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(resposta.getBody()).isNotNull();
+        assertThat(resposta.getBody().id()).isNotNull();
+        assertThat(resposta.getBody().nome()).isEqualTo(nome);
     }
 
     @Test
@@ -72,26 +95,6 @@ public class AutorTest {
         assertThat(resposta.getBody().cpf()).isEqualTo(atualizacao.cpf());
         assertThat(resposta.getBody().sexo()).isEqualTo(dto.sexo());
         assertThat(resposta.getBody().anoDeNascimento()).isEqualTo(atualizacao.anoDeNascimento());
-    }
-
-    @Test
-    @DisplayName("Deve buscar um autor pelo nome com sucesso!")
-    @Sql(scripts = {"/gera_autor_banco.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    public void deveBuscarUmAutorPeloNomeComSucesso() {
-        String nome = "Machado de Assis";
-
-        ResponseEntity<AutorResponse> resposta =
-                template.exchange(
-                        "/autores/nome?nome={"+nome+"}",
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<AutorResponse>() {},
-                        nome
-                );
-        assertThat(resposta.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(resposta.getBody()).isNotNull();
-        assertThat(resposta.getBody().id()).isNotNull();
-        assertThat(resposta.getBody().nome()).isEqualTo(nome);
     }
 
     @Test
@@ -134,6 +137,4 @@ public class AutorTest {
         assertThat(resposta.getBody()).isNotNull();
         assertThat(resposta.getBody().content().size()).isEqualTo(3);
     }
-
-
 }
